@@ -1,6 +1,18 @@
 import os
 import json
 
+def print_hierarchie(fichier_json):
+	with open(fichier_json,'r') as f:
+		structure=json.load(f)
+	print('Les dossiers existent deja')
+	print('voici la liste de dossiers : ')
+	for key, values in structure.items():
+		print ('. {0}'.format(key))
+		for value in values:
+			print('--- {0}'.format(value))
+		
+		print('='*25)
+
 def creer_dossiers(dossiers):
 	for key, values in dossiers.items():
 		for value in values:
@@ -28,5 +40,8 @@ structure={
 			'Videos': ['Chat', 'Musique'] 
 			}
 
-creer_dossiers(structure)
-ecrire_json(fichier_json,structure)
+if os.path.isfile(fichier_json):
+	print_hierarchie(fichier_json)
+else:
+	creer_dossiers(structure)
+	ecrire_json(fichier_json,structure)
